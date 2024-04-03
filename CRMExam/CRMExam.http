@@ -1,0 +1,6 @@
+@CRMExam_HostAddress = http://localhost:5084
+
+GET {{CRMExam_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
