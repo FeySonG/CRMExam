@@ -1,8 +1,4 @@
-﻿using CRMExam.Entities;
-using CRMExam.Enum;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Reflection.Emit;
+﻿
 
 namespace CRMExam.Configurations
 {
