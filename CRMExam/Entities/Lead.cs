@@ -1,5 +1,4 @@
-﻿using CRMExam.Enum;
-using System.ComponentModel.DataAnnotations;
+﻿
 
 namespace CRMExam.Entities
 {

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace CRMExam.Contracts
+﻿namespace CRMExam.Controllers
 {
     [ApiController]
     [Route("api/lead-controller")]

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CRMExam.Entities;
+﻿
 
 
 namespace CRMExam

@@ -1,7 +1,4 @@
-﻿using CRMExam.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.Identity.Client;
+﻿
 
 namespace CRMExam.Configurations
 {
