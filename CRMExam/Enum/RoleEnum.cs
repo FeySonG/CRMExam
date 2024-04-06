@@ -1,12 +1,11 @@
 ﻿namespace CRMExam.Enum
 {
-    public class RoleEnum
-    {
-        enum Role
+ 
+       public enum UserRole
         {
             Admin,
             Marketing,
             Sales
         }
-    } 
+    
 }
