@@ -1,14 +1,7 @@
-﻿using CRMExam.Enum;
-using System.ComponentModel.DataAnnotations;
-
-namespace CRMExam.Entities
+﻿namespace CRMExam.Contracts
 {
-    public class Contact
+    public class ContactDto
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();  
-        public Guid MarketingId { get; set; } 
-
         [Required]
         [StringLength(100)]
         public required string Name { get; set; }
@@ -27,8 +20,5 @@ namespace CRMExam.Entities
 
         [Required]
         public ContactStatus Status { get; set; }
-
-        [Required]
-        public DateTime DateOfChange { get; set; } = DateTime.UtcNow;
     }
 }

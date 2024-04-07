@@ -6,7 +6,7 @@ namespace CRMExam.Contracts
     [Route("api/user-controller")]
     public class UserController : ControllerBase
     {
-        [HttpPost]
+        [HttpPost("LogIn",Name = "LogIn")]
         public Task<IActionResult> LogIn()
         {
             return null;
@@ -18,13 +18,13 @@ namespace CRMExam.Contracts
             return null;
         }
 
-        [HttpGet]
-        public Task<IActionResult> GetUserInfo()
+        [HttpGet("{id}")]
+        public Task<IActionResult> GetUserInfo(Guid id)
         {
             return null;
         }
 
-        [HttpPost]
+        [HttpPost( "Create",Name = "Create User" ) ]
         public Task<IActionResult> AddUser()
         {
             return null;
@@ -36,7 +36,7 @@ namespace CRMExam.Contracts
             return null;
         }
 
-        [HttpPatch]
+        [HttpPut]
         public Task<IActionResult> ChangeUserRole()
         {
             return null;

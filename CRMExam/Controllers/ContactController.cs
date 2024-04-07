@@ -4,36 +4,50 @@ namespace CRMExam.Contracts
 {
     [ApiController]
     [Route("api/contact-controller")]
-    public class ContactController : ControllerBase
+    public class ContactController(ContactService service)  : ControllerBase
     {
-        [HttpGet]
-        public Task<IActionResult> GetContacts()
-        {
-            return null;
-        }
+        private readonly ContactService _service = service;
+
 
         [HttpGet]
-        public Task<IActionResult> GetLeadContacts()
+        public async Task<IActionResult> GetContacts()
         {
-            return null;
+          var contacts = await  _service.GetAllAsync();
+
+            return Ok(contacts);
+        }
+
+        [HttpGet("Leads")]
+        public async Task<IActionResult> GetLeadContacts()
+        {
+            var leadContacts = await _service.GetLeadAsync();
+
+            return Ok(leadContacts);
         }
 
         [HttpPost]
-        public Task<IActionResult> CreateContact()
+        public async Task<IActionResult> CreateContact( ContactDto cont)
         {
-            return null;
+            await  _service.CreateAsync(cont);
+
+            return Ok(cont);
         }
 
-        [HttpPatch]
-        public Task<IActionResult> ChangeContact()
+        [HttpPut]
+        public async Task<IActionResult> ChangeContact(Guid id, ContactDto changes)
         {
-            return null;
+           var contact =   await _service.UpdateAsync(id, changes);
+            if(contact == null) return NotFound("Contact not found!");
+            return Ok(contact);
         }
-
+        
         [HttpPatch]
-        public Task<IActionResult> ChangeContactStatus()
+        public async Task<IActionResult> ChangeContactStatus(Guid id, ContactStatus status)
         {
-            return null;
+            var contact = await _service.ChangeStatusAsync(id, status);
+            if (contact == null) return NotFound("Contact not found!");
+
+            return Ok(contact);
         }
     }
 }

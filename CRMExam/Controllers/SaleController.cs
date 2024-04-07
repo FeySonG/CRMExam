@@ -12,7 +12,7 @@ namespace CRMExam.Contracts
             return null;
         }
 
-        [HttpGet]
+        [HttpGet("id")]
         public Task<IActionResult> GetMySales()
         {
             return null;

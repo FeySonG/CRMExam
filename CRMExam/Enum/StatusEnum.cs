@@ -2,14 +2,14 @@
 {
     public enum ContactStatus
         {
-            Cold,
+            Cold = 1,
             Warm,
             Lead
         }
 
     public enum LeadStatus
     {
-        New,
+        New = 1,
         Proposition,
         Negotitation,
         Contract,
