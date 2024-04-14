@@ -6,3 +6,8 @@ global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.AspNetCore.Mvc;
 global using System.ComponentModel.DataAnnotations;
 global using CRMExam.Enum;
+global using CRMExam.Contracts;
+global using CRMExam.Mappings;
+global using CRMExam.Middleware;
+global using AutoMapper;
+global using System;

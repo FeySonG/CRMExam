@@ -1,51 +1,86 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace CRMExam.Contracts
 {
     [ApiController]
     [Route("api/user-controller")]
-    public class UserController : ControllerBase
+    public class UserController(UserService services) : ControllerBase
     {
-        [HttpPost]
-        public Task<IActionResult> LogIn()
+        private readonly UserService _services = services;
+
+        [AllowAnonymous]
+        [HttpPost("LoginUser")]
+        public async Task<IActionResult> LogIn(UserLoginDto credentials)
         {
-            return null;
+           var user =  await _services.LogInAsync(credentials);
+
+            if (user == null) return Unauthorized("User not found or incorrect data*");
+
+            return Ok("Welcome to Chum Bucket!: " + user.FullName);
         }
 
-        [HttpGet]
-        public Task<IActionResult> GetUsers()
+        [Authorize(Roles = "admin")]
+        [HttpGet( "AllUsers")]
+        public async Task<IActionResult> GetUsers()
         {
-            return null;
+            var users = await _services.Users();
+
+            if (users != null) return Ok(users);
+
+            return Unauthorized();
+
+        }
+        [Authorize]
+        [HttpGet("UserInfo")]
+        public async Task<IActionResult> GetUserInfo()
+        {
+            var user = await _services.UserInfoAsync();
+
+            if (user == null) return BadRequest();
+
+            return Ok(user);
         }
 
-        [HttpGet]
-        public Task<IActionResult> GetUserInfo()
+        [Authorize(Roles = "admin")]
+        [HttpPost ("AddUser")]
+        public async Task<IActionResult> AddUser(UserCreateDto user)
         {
-            return null;
+           var info =      await _services.AddUserAsync(user);
+            if(info != null) return Ok(user);
+             return Unauthorized();
+            
         }
 
-        [HttpPost]
-        public Task<IActionResult> AddUser()
-        {
-            return null;
-        }
-
+        [Authorize(Roles = "admin")]
         [HttpDelete]
-        public Task<IActionResult> DeleteUser()
+        public async Task<IActionResult> DeleteUser(Guid userId)
         {
-            return null;
+            var info = await _services.KillUser(userId);
+          
+            if(info == false) return BadRequest("User not found or is an Admin!");
+            return NoContent();
         }
 
-        [HttpPatch]
-        public Task<IActionResult> ChangeUserRole()
+        [Authorize(Roles = "admin")]
+        [HttpPatch("Roles")]
+        public async Task<IActionResult> ChangeUserRole(Guid id, UserRole role)
         {
-            return null;
+           var info = await _services.ChangeRoleAsync(id, role);
+            if(info == null) return BadRequest();
+            return Ok(info);
+        }
+        [Authorize]
+        [HttpPatch("Password")]
+        public async Task<IActionResult> ChangeUserPassword(string password)
+        {
+          var info =  await _services.ChangePasswordAsync(password);
+            if(info == false) return BadRequest(info);
+            
+            return Ok("Succesfully");
         }
 
-        [HttpPatch]
-        public Task<IActionResult> ChangeUserPassword()
-        {
-            return null;
-        }
+      
     }
 }

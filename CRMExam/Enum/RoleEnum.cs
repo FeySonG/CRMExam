@@ -1,11 +1,16 @@
-﻿namespace CRMExam.Enum
+﻿
+using System.Runtime.Serialization;
+
+namespace CRMExam.Enum
 {
- 
-       public enum UserRole
-        {
-            Admin,
-            Marketing,
-            Sales
-        }
-    
+
+    public enum UserRole
+    {
+        admin = 1,
+
+        marketing,
+
+        saller
+    }
+
 }
