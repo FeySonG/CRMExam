@@ -4,7 +4,7 @@ namespace CRMExam.Contracts
 {
     [ApiController]
     [Route("api/contact-controller")]
-    public class ContactController(ContactService service)  : ControllerBase
+    public class ContactController : ControllerBase
     {
         private readonly ContactService _service = service;
 
