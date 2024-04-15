@@ -12,7 +12,7 @@ namespace CRMExam.Contracts
 
         [AllowAnonymous]
         [HttpPost("LoginUser")]
-        public async Task<IActionResult> LogIn(UserLoginDto credentials)
+        public async Task<IActionResult> LogInAsync(UserLoginDto credentials)
         {
            var user =  await _services.LogInAsync(credentials);
 

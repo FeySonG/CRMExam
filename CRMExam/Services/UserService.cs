@@ -95,11 +95,10 @@ namespace CRMExam.Services
         {
             var stringId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            Guid guidId;
 
-            if(Guid.TryParse(stringId, out guidId) == false) return false;
+            if (Guid.TryParse(stringId, out Guid guidId) == false) return false;
 
-           var user =  await _context.Users.FirstOrDefaultAsync(u => u.Id == guidId);
+            var user =  await _context.Users.FirstOrDefaultAsync(u => u.Id == guidId);
             if (user == null) return false;
             user.Password = newPassword;
            _context.Users.Update(user);
