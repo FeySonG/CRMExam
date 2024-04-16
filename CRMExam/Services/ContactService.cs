@@ -1,13 +1,28 @@
 ﻿using CRMExam.Contracts;
 using Microsoft.Extensions.Hosting;
+using System.Security.Claims;
 
 namespace CRMExam.Services
 {
-    public class ContactService (AppDbContext context, IMapper mapper)
+    public class ContactService 
     {
-        private readonly AppDbContext _context = context;
-        private readonly IMapper _mapper = mapper
-            ;
+        private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
+
+        private readonly HttpContext _httpContext;
+        public ContactService(IHttpContextAccessor accessor, AppDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+
+
+            if (accessor.HttpContext is null)
+            {
+                throw new ArgumentException(nameof(accessor.HttpContext));
+            }
+
+            _httpContext = accessor.HttpContext;
+        }
 
         public async Task<List<Contact>> GetAllAsync()
         {
@@ -26,12 +41,17 @@ namespace CRMExam.Services
             return leadContacts;
         }
 
-        public async Task CreateAsync(ContactDto contact )
+        public async Task<bool> CreateAsync(ContactDto contact )
         {
             var newContact = _mapper.Map<Contact>(contact);
 
+            var stringId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (Guid.TryParse(stringId, out Guid guidId) == false) return false;
+            newContact.MarketingId = guidId;
+
             await _context.Contacts.AddAsync(newContact);
             await _context.SaveChangesAsync();
+            return true;
         } 
 
         public async Task<ContactDto?> UpdateAsync(Guid id, ContactDto changes)
@@ -45,6 +65,7 @@ namespace CRMExam.Services
             updatedContact.PhoneNumber = (!string.IsNullOrWhiteSpace(updatedContact.PhoneNumber) && updatedContact.PhoneNumber != "string") ? updatedContact.PhoneNumber : changes.PhoneNumber;
             updatedContact.Email = (!string.IsNullOrWhiteSpace(updatedContact.Email) && updatedContact.Email != "string") ? updatedContact.Email : changes.Email;
 
+            _context.Contacts.Update(updatedContact);
             await _context.SaveChangesAsync();
             return changes;
         } 

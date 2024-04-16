@@ -1,5 +1,7 @@
 ﻿
 
+using Microsoft.AspNetCore.Authorization;
+
 namespace CRMExam.Contracts
 {
     [ApiController]
@@ -8,7 +10,7 @@ namespace CRMExam.Contracts
     {
         private readonly ContactService _service = service;
 
-
+        [Authorize (Roles = "admin, marketing")]
         [HttpGet]
         public async Task<IActionResult> GetContacts()
         {
@@ -16,7 +18,7 @@ namespace CRMExam.Contracts
 
             return Ok(contacts);
         }
-
+        [Authorize (Roles = "saller")]
         [HttpGet("Leads")]
         public async Task<IActionResult> GetLeadContacts()
         {
@@ -24,7 +26,7 @@ namespace CRMExam.Contracts
 
             return Ok(leadContacts);
         }
-
+        [Authorize (Roles = "marketing")]
         [HttpPost]
         public async Task<IActionResult> CreateContact( ContactDto cont)
         {
@@ -32,7 +34,7 @@ namespace CRMExam.Contracts
 
             return Ok(cont);
         }
-
+        [Authorize(Roles = "saller, marketing")]
         [HttpPut]
         public async Task<IActionResult> ChangeContact(Guid id, ContactDto changes)
         {
@@ -40,7 +42,7 @@ namespace CRMExam.Contracts
             if(contact == null) return NotFound("Contact not found!");
             return Ok(contact);
         }
-        
+        [Authorize(Roles = "marketing")]
         [HttpPatch]
         public async Task<IActionResult> ChangeContactStatus(Guid id, ContactStatus status)
         {
