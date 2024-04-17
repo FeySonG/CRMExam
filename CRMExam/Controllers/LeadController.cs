@@ -17,7 +17,7 @@ namespace CRMExam.Controllers
         }
 
         [Authorize(Roles = "saller")]
-        [HttpPost]
+        [HttpPost("{id}")]
         public async Task<IActionResult> CreateLead(Guid id, LeadStatus status)
         {
             var info = await _service.CreateLead(id, status);
@@ -27,7 +27,7 @@ namespace CRMExam.Controllers
         }
 
         [Authorize(Roles = "saller")]
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> ChangeLeadStatus(Guid leadId, LeadStatus status)
         {
             var info = await _service.ChangeStatus(leadId, status);

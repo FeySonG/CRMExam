@@ -17,7 +17,7 @@ namespace CRMExam.Contracts
             return Ok(sales);
         }
         [Authorize(Roles = "saller")]
-        [HttpGet("id")]
+        [HttpGet("MySales")]
         public async Task<IActionResult> GetMySales()
         {
             var mySales = await service.MySales();
@@ -27,7 +27,7 @@ namespace CRMExam.Contracts
         }
 
         [Authorize(Roles = "saller")]
-        [HttpPost]
+        [HttpPost("{id}")]
         public async Task<IActionResult> MakeDeal(Guid leadId)
         {
             var sale = await service.MakeDeal(leadId);

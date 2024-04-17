@@ -35,7 +35,7 @@ namespace CRMExam.Contracts
             return Ok(cont);
         }
         [Authorize(Roles = "saller, marketing")]
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> ChangeContact(Guid id, ContactDto changes)
         {
            var contact =   await _service.UpdateAsync(id, changes);
@@ -43,7 +43,7 @@ namespace CRMExam.Contracts
             return Ok(contact);
         }
         [Authorize(Roles = "marketing")]
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> ChangeContactStatus(Guid id, ContactStatus status)
         {
             var contact = await _service.ChangeStatusAsync(id, status);

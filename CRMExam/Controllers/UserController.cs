@@ -11,7 +11,7 @@ namespace CRMExam.Contracts
         private readonly UserService _services = services;
 
         [AllowAnonymous]
-        [HttpPost("LoginUser")]
+        [HttpPost("Login")]
         public async Task<IActionResult> LogInAsync(UserLoginDto credentials)
         {
            var user =  await _services.LogInAsync(credentials);
@@ -22,7 +22,7 @@ namespace CRMExam.Contracts
         }
 
         [Authorize(Roles = "admin")]
-        [HttpGet( "AllUsers")]
+        [HttpGet( "All")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _services.Users();
@@ -33,7 +33,7 @@ namespace CRMExam.Contracts
 
         }
         [Authorize]
-        [HttpGet("UserInfo")]
+        [HttpGet("Info")]
         public async Task<IActionResult> GetUserInfo()
         {
             var user = await _services.UserInfoAsync();
@@ -44,7 +44,7 @@ namespace CRMExam.Contracts
         }
 
         [Authorize(Roles = "admin")]
-        [HttpPost ("AddUser")]
+        [HttpPost ("Add")]
         public async Task<IActionResult> AddUser(UserCreateDto user)
         {
            var info =      await _services.AddUserAsync(user);
@@ -54,7 +54,7 @@ namespace CRMExam.Contracts
         }
 
         [Authorize(Roles = "admin")]
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(Guid userId)
         {
             var info = await _services.KillUser(userId);
@@ -64,7 +64,7 @@ namespace CRMExam.Contracts
         }
 
         [Authorize(Roles = "admin")]
-        [HttpPatch("Roles")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> ChangeUserRole(Guid id, UserRole role)
         {
            var info = await _services.ChangeRoleAsync(id, role);
