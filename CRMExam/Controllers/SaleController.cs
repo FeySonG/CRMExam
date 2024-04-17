@@ -1,27 +1,41 @@
 ﻿
 
+using Microsoft.AspNetCore.Authorization;
+
 namespace CRMExam.Contracts
 {
     [ApiController]
     [Route("api/sale-controller")]
-    public class SaleController : ControllerBase
+    public class SaleController(SaleService service) : ControllerBase
     {
+        [Authorize(Roles = "admin")]
         [HttpGet]
-        public Task<IActionResult> GetSales()
+        public async Task<IActionResult> GetSales()
         {
-            return null;
-        }
+            var sales = await service.GetAll();
 
+            return Ok(sales);
+        }
+        [Authorize(Roles = "saller")]
         [HttpGet("id")]
-        public Task<IActionResult> GetMySales()
+        public async Task<IActionResult> GetMySales()
         {
-            return null;
+            var mySales = await service.MySales();
+            if(mySales == null) return BadRequest();
+
+            return Ok(mySales);
         }
 
+        [Authorize(Roles = "saller")]
         [HttpPost]
-        public Task<IActionResult> MakeDeal()
+        public async Task<IActionResult> MakeDeal(Guid leadId)
         {
-            return null;
+            var sale = await service.MakeDeal(leadId);
+            if(sale == null) return BadRequest();
+            return Ok(sale);
+
+
+            
         }
     }
 }
