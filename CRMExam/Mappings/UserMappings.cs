@@ -4,7 +4,7 @@
     {
         public UserMappings()
         {
-            CreateMap<User, UserDto>()
+            CreateMap<User, UserInfoDto>()
                 .ReverseMap();
 
             CreateMap<User, UserCreateDto>()

@@ -55,14 +55,14 @@ namespace CRMExam.Services
             return users;
         }
 
-        public async Task<UserDto> UserInfoAsync()
+        public async Task<UserInfoDto> UserInfoAsync()
         {
             var userId = _httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var foundUser = await _context.Users.FirstOrDefaultAsync(user => user.Id.ToString() == userId);
 
 
-            var userDto = _mapper.Map<UserDto>(foundUser);
+            var userDto = _mapper.Map<UserInfoDto>(foundUser);
 
             return userDto;
         }
@@ -79,7 +79,7 @@ namespace CRMExam.Services
             return true;
         }
 
-        public async Task<UserDto?> ChangeRoleAsync(Guid id, UserRole role)
+        public async Task<UserInfoDto?> ChangeRoleAsync(Guid id, UserRole role)
         {
            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user == null) return null; 
@@ -88,7 +88,7 @@ namespace CRMExam.Services
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
-           var userDto =  _mapper.Map<UserDto>(user);
+           var userDto =  _mapper.Map<UserInfoDto>(user);
             return userDto;
         }
         public async Task<bool> ChangePasswordAsync(string newPassword)

@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel;
+
 namespace CRMExam.Entities
 {
     public class Lead

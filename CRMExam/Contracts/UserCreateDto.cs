@@ -1,19 +1,28 @@
-﻿namespace CRMExam.Contracts
+﻿using System.ComponentModel;
+
+namespace CRMExam.Contracts
 {
     public class UserCreateDto
     {
-        [Required]
-        [StringLength(300)]
+        [DisplayName("FullName")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = ValidationMessage.REQUIRED)]
+        [MaxLength(150, ErrorMessage = ValidationMessage.MAX_LENGTH)]
         public  required string FullName { get; set; }
 
-        [Required]
-        [StringLength(200)]
+        [DisplayName("Email Adress")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = ValidationMessage.REQUIRED)]
+        [MaxLength(150, ErrorMessage = ValidationMessage.MAX_LENGTH)]
+        [EmailAddress(ErrorMessage = ValidationMessage.EMAIL)]
         public required string Email { get; set; }
 
-        [Required]
+        [DisplayName("Password")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = ValidationMessage.REQUIRED)]
+        [MaxLength(50, ErrorMessage = ValidationMessage.MAX_LENGTH)]
         public required string Password { get; set; }
 
-        [Required]
+        [DisplayName("User Role")]
+        [Required(ErrorMessage = ValidationMessage.REQUIRED)]
+        [EnumDataType(typeof(UserRole), ErrorMessage = ValidationMessage.USER_ENUM)]
         public UserRole Role { get; set; }
     }
 }

@@ -9,4 +9,5 @@ global using CRMExam.Data;
 global using CRMExam.Middleware;
 global using CRMExam.Services;
 global using CRMExam.Entities;
+global using CRMExam.Validation;
 global using AutoMapper;

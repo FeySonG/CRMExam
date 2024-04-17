@@ -1,6 +1,6 @@
 ﻿namespace CRMExam.Contracts
 {
-    public class UserDto
+    public class UserInfoDto
     {
         [StringLength(300)]
         public string? FullName { get; set; }
