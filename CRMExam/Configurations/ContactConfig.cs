@@ -6,12 +6,7 @@ namespace CRMExam.Configurations
     {
         public void Configure(EntityTypeBuilder<Contact> builder)
         {
-           // builder.HasOne<User>()  
-           //.WithMany()
-           // .HasForeignKey(c => c.MarketingId);
-
-
-
+         
         }
     }
 }
